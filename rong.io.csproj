@@ -5,7 +5,7 @@
     <AssemblyName>rong.io</AssemblyName>
     <Description>RongIM .Net Core Server SDK http://rong.io</Description>
     <Authors>yangzhongke</Authors>
-    <PackageProjectUrl>http://www.rupeng.com</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/yangzhongke/rongim.server.netcore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/yangzhongke/rongim.server.netcore</RepositoryUrl>
     <PackageId>rongim.server.netcore</PackageId>
     <Product>rongIM</Product>
