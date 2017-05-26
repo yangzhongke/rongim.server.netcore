@@ -4,5 +4,5 @@
 # NuGet安装指令：
 ``Install-Package rongim.server.netcore``
 # 例子代码：
-``RongCloud cloud = RongCloud.getInstance("your apikey", "your AppSecret");
+``RongCloud cloud = RongCloud.getInstance("your apikey", "your AppSecret");  
 var result = await cloud.user.getTokenAsync('userId', "username", "http://uc.discuz.net/images/noavatar_middle.gif");``
