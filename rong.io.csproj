@@ -1,8 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>rong.io</AssemblyName>
+    <Description>RongIM .Net Core Server SDK http://rong.io</Description>
+    <Authors>yangzhongke</Authors>
+    <PackageProjectUrl>http://www.rupeng.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yangzhongke/rongim.server.netcore</RepositoryUrl>
+    <PackageId>rongim.server.netcore</PackageId>
+    <Product>rongIM</Product>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
