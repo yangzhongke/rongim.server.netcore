@@ -55,15 +55,18 @@ namespace donet.io.rong.util {
                     contentType = "application/x-www-form-urlencoded";
                 }
 
-                StringContent httpContent = new StringContent(postStr, Encoding.UTF8, contentType);
-                httpContent.Headers.Add("App-Key", appkey);
-                httpContent.Headers.Add("Nonce", nonce);
-                httpContent.Headers.Add("Timestamp", timestamp);
-                httpContent.Headers.Add("Signature", signature);
+                using (StringContent httpContent = new StringContent(postStr, Encoding.UTF8, contentType))
+                {
+                    httpContent.Headers.Add("App-Key", appkey);
+                    httpContent.Headers.Add("Nonce", nonce);
+                    httpContent.Headers.Add("Timestamp", timestamp);
+                    httpContent.Headers.Add("Signature", signature);
 
-
-                var resultTask = await httpClient.PostAsync(methodUrl, httpContent);
-                return await resultTask.Content.ReadAsStringAsync();
+                    using (var resultTask = await httpClient.PostAsync(methodUrl, httpContent))
+                    {
+                        return await resultTask.Content.ReadAsStringAsync();
+                    }                       
+                }                    
             }
         }
 
