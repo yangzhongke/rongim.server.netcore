@@ -13,8 +13,11 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Chatroom {
-    	
+    public class Chatroom:IDisposable
+    {
+
+        private RongHttpClient rongClient = new RongHttpClient();
+
         private String appKey;
         private String appSecret;
         
@@ -47,7 +50,7 @@ namespace donet.io.rong.methods {
             }
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/create.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/create.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -77,7 +80,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/join.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/join.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -101,7 +104,7 @@ namespace donet.io.rong.methods {
 			
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (ChatroomQueryReslut) RongJsonUtil.JsonStringToObj<ChatroomQueryReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/query.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (ChatroomQueryReslut) RongJsonUtil.JsonStringToObj<ChatroomQueryReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -133,7 +136,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "order=" + HttpUtility.UrlEncode(order == null ? "" : order) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (ChatroomUserQueryReslut) RongJsonUtil.JsonStringToObj<ChatroomUserQueryReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/query.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (ChatroomUserQueryReslut) RongJsonUtil.JsonStringToObj<ChatroomUserQueryReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -153,7 +156,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/message/stopDistribution.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/message/stopDistribution.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -173,7 +176,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/message/resumeDistribution.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/message/resumeDistribution.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -205,7 +208,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "minute=" + HttpUtility.UrlEncode(minute == null ? "" : minute) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/gag/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/gag/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -225,7 +228,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (ListGagChatroomUserReslut) RongJsonUtil.JsonStringToObj<ListGagChatroomUserReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/gag/list.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (ListGagChatroomUserReslut) RongJsonUtil.JsonStringToObj<ListGagChatroomUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/gag/list.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -251,7 +254,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/gag/rollback.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/gag/rollback.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -283,7 +286,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "minute=" + HttpUtility.UrlEncode(minute == null ? "" : minute) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/block/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/block/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -303,7 +306,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (ListBlockChatroomUserReslut) RongJsonUtil.JsonStringToObj<ListBlockChatroomUserReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/block/list.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (ListBlockChatroomUserReslut) RongJsonUtil.JsonStringToObj<ListBlockChatroomUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/block/list.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -329,7 +332,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "chatroomId=" + HttpUtility.UrlEncode(chatroomId == null ? "" : chatroomId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/block/rollback.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/block/rollback.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -353,7 +356,7 @@ namespace donet.io.rong.methods {
 			
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/destroy.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/destroy.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -377,7 +380,7 @@ namespace donet.io.rong.methods {
 			
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/message/priority/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/message/priority/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -407,9 +410,13 @@ namespace donet.io.rong.methods {
 			
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/whitelist/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/chatroom/user/whitelist/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-            
-	}
+
+        public void Dispose()
+        {
+            rongClient.Dispose();
+        }
+    }
        
 }

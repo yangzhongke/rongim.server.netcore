@@ -13,13 +13,14 @@ using donet.io.rong.models;
 using System.Net.Http;
 
 namespace donet.io.rong.util {
-    class RongHttpClient {
+    class RongHttpClient:IDisposable {
+
+        private HttpClient httpClient = new HttpClient();
     
-        public static async Task<String> ExecuteGetAsync(string url) {
+        public async Task<String> ExecuteGetAsync(string url) {
             if (string.IsNullOrEmpty(url)) {
                 throw new ArgumentNullException("url");
             }
-            HttpClient httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(30);
             var result = await httpClient.GetAsync(url);
             if(result.StatusCode== HttpStatusCode.OK)
@@ -33,7 +34,7 @@ namespace donet.io.rong.util {
         }
 
 
-        public static async Task<String> ExecutePostAsync(String appkey, String appSecret, String methodUrl, String postStr, String contentType) {
+        public async Task<String> ExecutePostAsync(String appkey, String appSecret, String methodUrl, String postStr, String contentType) {
             Random rd = new Random();
             int rd_i = rd.Next();
             String nonce = Convert.ToString(rd_i);
@@ -42,7 +43,6 @@ namespace donet.io.rong.util {
 
             String signature = GetHash(appSecret + nonce + timestamp);
 
-            HttpClient httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(30);
 
             if (contentType == null || contentType.Equals("") || contentType.Length < 10)
@@ -103,6 +103,24 @@ namespace donet.io.rong.util {
                 error.ToString());
 
             return false;
+        }
+
+        private bool disposedValue = false; 
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    httpClient.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
         }
 
     }

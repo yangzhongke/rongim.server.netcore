@@ -14,7 +14,8 @@ using System.Text.Encodings.Web;
 
 namespace donet.io.rong.methods {
 
-    public class User {
+    public class User:IDisposable {
+        private RongHttpClient rongClient = new RongHttpClient();
     	
         private String appKey;
         private String appSecret;
@@ -54,7 +55,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "portraitUri=" + HttpUtility.UrlEncode(portraitUri == null ? "" : portraitUri) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 
-            string result = await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI + "/user/getToken.json", postStr, "application/x-www-form-urlencoded");
+            string result = await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI + "/user/getToken.json", postStr, "application/x-www-form-urlencoded");
 
               return (TokenReslut) RongJsonUtil.JsonStringToObj<TokenReslut>(result);
 		}
@@ -79,7 +80,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "portraitUri=" + HttpUtility.UrlEncode(portraitUri == null ? "" : portraitUri) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/refresh.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/refresh.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -101,7 +102,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CheckOnlineReslut) RongJsonUtil.JsonStringToObj<CheckOnlineReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/checkOnline.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CheckOnlineReslut) RongJsonUtil.JsonStringToObj<CheckOnlineReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/checkOnline.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -127,7 +128,7 @@ namespace donet.io.rong.methods {
             postStr += "minute=" + HttpUtility.UrlEncode(Convert.ToString(minute) == null ? "" : Convert.ToString(minute)) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -147,7 +148,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/unblock.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/unblock.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -160,7 +161,7 @@ namespace donet.io.rong.methods {
 
 	    	String postStr = "";
 	    	
-          	return (QueryBlockUserReslut) RongJsonUtil.JsonStringToObj<QueryBlockUserReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block/query.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (QueryBlockUserReslut) RongJsonUtil.JsonStringToObj<QueryBlockUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -186,7 +187,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "blackUserId=" + HttpUtility.UrlEncode(blackUserId == null ? "" : blackUserId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -206,7 +207,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (QueryBlacklistUserReslut) RongJsonUtil.JsonStringToObj<QueryBlacklistUserReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/query.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (QueryBlacklistUserReslut) RongJsonUtil.JsonStringToObj<QueryBlacklistUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -232,9 +233,13 @@ namespace donet.io.rong.methods {
 	    	postStr += "blackUserId=" + HttpUtility.UrlEncode(blackUserId == null ? "" : blackUserId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/remove.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/remove.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-            
-	}
+
+        public void Dispose()
+        {
+            rongClient.Dispose();
+        }
+    }
        
 }

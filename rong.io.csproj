@@ -10,6 +10,7 @@
     <PackageId>rongim.server.netcore</PackageId>
     <Product>rongIM</Product>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

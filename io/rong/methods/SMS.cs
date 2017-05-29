@@ -13,7 +13,9 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class SMS {
+    public class SMS:IDisposable {
+
+        private RongHttpClient rongClient = new RongHttpClient();
     	
         private String appKey;
         private String appSecret;
@@ -41,7 +43,7 @@ namespace donet.io.rong.methods {
 			postStr = RongCloud.RONGCLOUDSMSURI +"/getImgCode.json";
 			postStr = postStr + ("?appKey=") + (HttpUtility.UrlEncode(appKey == null ? "" : appKey));
 			            
-            return (SMSImageCodeReslut) RongJsonUtil.JsonStringToObj<SMSImageCodeReslut>(await RongHttpClient.ExecuteGetAsync(postStr));
+            return (SMSImageCodeReslut) RongJsonUtil.JsonStringToObj<SMSImageCodeReslut>(await rongClient.ExecuteGetAsync(postStr));
 		}	
             
         /**
@@ -77,7 +79,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "verifyCode=" + HttpUtility.UrlEncode(verifyCode == null ? "" : verifyCode) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (SMSSendCodeReslut) RongJsonUtil.JsonStringToObj<SMSSendCodeReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDSMSURI+"/sendCode.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (SMSSendCodeReslut) RongJsonUtil.JsonStringToObj<SMSSendCodeReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDSMSURI+"/sendCode.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -103,9 +105,13 @@ namespace donet.io.rong.methods {
 	    	postStr += "code=" + HttpUtility.UrlEncode(code == null ? "" : code) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDSMSURI+"/verifyCode.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDSMSURI+"/verifyCode.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-            
-	}
+
+        public void Dispose()
+        {
+            rongClient.Dispose();
+        }
+    }
        
 }

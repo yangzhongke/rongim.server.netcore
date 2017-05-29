@@ -3,15 +3,17 @@ using donet.io.rong.methods;
  * 融云 Server API donet 客户端
  * create by kitName
  * create datetime : 2016-10-19 
- * 
  * v2.0.1
+ * 
+ * 修改 by yangzhongke 
+ * 适配.net core
  */
 using System;
 using System.Collections.Generic;
 
 namespace donet.io.rong
 {
-    public class RongCloud {
+    public class RongCloud:IDisposable {
     
     	private static Dictionary<String, RongCloud> rongCloud = new Dictionary<String, RongCloud>();
 		public static String RONGCLOUDURI = "http://api.cn.ronghub.com";
@@ -46,5 +48,30 @@ namespace donet.io.rong
             }
             return rongCloud[appKey];
 		}
+
+        public static void ReleaseAll()
+        {
+            foreach(var rc in rongCloud.Values)
+            {
+                using (rc)
+                {
+
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            using (user)
+            using (message)
+            using (wordfilter)
+            using (group)
+            using (chatroom)
+            using (push)
+            using(sms)
+            {
+
+            }
+        }
     }
 }

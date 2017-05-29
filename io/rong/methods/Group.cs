@@ -13,8 +13,8 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Group {
-    	
+    public class Group:IDisposable {
+        private RongHttpClient rongClient = new RongHttpClient();
         private String appKey;
         private String appSecret;
         
@@ -57,7 +57,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupName=" + HttpUtility.UrlEncode(groupName == null ? "" : groupName) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/create.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/create.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -89,7 +89,7 @@ namespace donet.io.rong.methods {
 	        }
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/sync.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/sync.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -115,7 +115,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupName=" + HttpUtility.UrlEncode(groupName == null ? "" : groupName) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/refresh.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/refresh.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -151,7 +151,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupName=" + HttpUtility.UrlEncode(groupName == null ? "" : groupName) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/join.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/join.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -171,7 +171,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupId=" + HttpUtility.UrlEncode(groupId == null ? "" : groupId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (GroupUserQueryReslut) RongJsonUtil.JsonStringToObj<GroupUserQueryReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/query.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (GroupUserQueryReslut) RongJsonUtil.JsonStringToObj<GroupUserQueryReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -201,7 +201,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupId=" + HttpUtility.UrlEncode(groupId == null ? "" : groupId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/quit.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/quit.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -233,7 +233,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "minute=" + HttpUtility.UrlEncode(minute == null ? "" : minute) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/gag/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/gag/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -253,7 +253,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupId=" + HttpUtility.UrlEncode(groupId == null ? "" : groupId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (ListGagGroupUserReslut) RongJsonUtil.JsonStringToObj<ListGagGroupUserReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/gag/list.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (ListGagGroupUserReslut) RongJsonUtil.JsonStringToObj<ListGagGroupUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/gag/list.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -283,7 +283,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupId=" + HttpUtility.UrlEncode(groupId == null ? "" : groupId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/gag/rollback.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/user/gag/rollback.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -309,9 +309,13 @@ namespace donet.io.rong.methods {
 	    	postStr += "groupId=" + HttpUtility.UrlEncode(groupId == null ? "" : groupId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/dismiss.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/group/dismiss.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-            
-	}
+
+        public void Dispose()
+        {
+            rongClient.Dispose();
+        }
+    }
        
 }

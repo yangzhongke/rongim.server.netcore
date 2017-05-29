@@ -13,8 +13,10 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Wordfilter {
-    	
+    public class Wordfilter : IDisposable
+    {
+        private RongHttpClient rongClient = new RongHttpClient();
+
         private String appKey;
         private String appSecret;
         
@@ -41,7 +43,7 @@ namespace donet.io.rong.methods {
 	    	postStr += "word=" + HttpUtility.UrlEncode(word == null ? "" : word) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/add.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -54,7 +56,7 @@ namespace donet.io.rong.methods {
 
 	    	String postStr = "";
 	    	
-          	return (ListWordfilterReslut) RongJsonUtil.JsonStringToObj<ListWordfilterReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/list.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (ListWordfilterReslut) RongJsonUtil.JsonStringToObj<ListWordfilterReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/list.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -74,9 +76,13 @@ namespace donet.io.rong.methods {
 	    	postStr += "word=" + HttpUtility.UrlEncode(word == null ? "" : word) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/delete.json", postStr, "application/x-www-form-urlencoded" ));
+          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/delete.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-            
-	}
+
+        public void Dispose()
+        {
+            rongClient.Dispose();
+        }
+    }
        
 }

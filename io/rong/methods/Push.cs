@@ -13,8 +13,9 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Push {
-    	
+    public class Push : IDisposable
+    {
+        private RongHttpClient rongClient = new RongHttpClient();
         private String appKey;
         private String appSecret;
         
@@ -39,7 +40,7 @@ namespace donet.io.rong.methods {
 			
 	    	String postStr = "";
 	        postStr = JsonConvert.SerializeObject(userTag);
-	        return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/tag/set.json", postStr, "application/json" ));
+	        return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/tag/set.json", postStr, "application/json" ));
 		}
             
         /**
@@ -57,9 +58,13 @@ namespace donet.io.rong.methods {
 			
 	    	String postStr = "";
 	        postStr = JsonConvert.SerializeObject(pushMessage);
-	        return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await RongHttpClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/push.json", postStr, "application/json" ));
+	        return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/push.json", postStr, "application/json" ));
 		}
-            
-	}
+
+        public void Dispose()
+        {
+            rongClient.Dispose();
+        }
+    }
        
 }
