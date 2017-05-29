@@ -8,7 +8,3 @@
  RongCloud cloud = RongCloud.getInstance("your apikey", "your AppSecret");  
 var result = await cloud.user.getTokenAsync('userId', "username", "http://uc.discuz.net/images/noavatar_middle.gif");
 ```
-在服务器退出的时候最好执行：
-```C#
-RongCloud.ReleaseAll();
-```

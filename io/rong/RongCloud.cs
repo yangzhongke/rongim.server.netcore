@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace donet.io.rong
 {
-    public class RongCloud:IDisposable {
+    public class RongCloud {
     
     	private static Dictionary<String, RongCloud> rongCloud = new Dictionary<String, RongCloud>();
 		public static String RONGCLOUDURI = "http://api.cn.ronghub.com";
@@ -48,30 +48,5 @@ namespace donet.io.rong
             }
             return rongCloud[appKey];
 		}
-
-        public static void ReleaseAll()
-        {
-            foreach(var rc in rongCloud.Values)
-            {
-                using (rc)
-                {
-
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            using (user)
-            using (message)
-            using (wordfilter)
-            using (group)
-            using (chatroom)
-            using (push)
-            using(sms)
-            {
-
-            }
-        }
     }
 }

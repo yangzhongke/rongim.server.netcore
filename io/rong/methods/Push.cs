@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Push : IDisposable
+    public class Push
     {
         private RongHttpClient rongClient = new RongHttpClient();
         private String appKey;
@@ -60,11 +60,6 @@ namespace donet.io.rong.methods {
 	        postStr = JsonConvert.SerializeObject(pushMessage);
 	        return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/push.json", postStr, "application/json" ));
 		}
-
-        public void Dispose()
-        {
-            rongClient.Dispose();
-        }
     }
        
 }

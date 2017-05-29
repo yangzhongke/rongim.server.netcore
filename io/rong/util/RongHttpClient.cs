@@ -13,24 +13,27 @@ using donet.io.rong.models;
 using System.Net.Http;
 
 namespace donet.io.rong.util {
-    class RongHttpClient:IDisposable {
+    class RongHttpClient {
 
-        private HttpClient httpClient = new HttpClient();
+       
     
         public async Task<String> ExecuteGetAsync(string url) {
             if (string.IsNullOrEmpty(url)) {
                 throw new ArgumentNullException("url");
             }
-            httpClient.Timeout = TimeSpan.FromSeconds(30);
-            var result = await httpClient.GetAsync(url);
-            if(result.StatusCode== HttpStatusCode.OK)
+            using (HttpClient httpClient = new HttpClient())
             {
-                return await result.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                return await result.Content.ReadAsStringAsync();
-            }
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
+                var result = await httpClient.GetAsync(url);
+                if (result.StatusCode == HttpStatusCode.OK)
+                {
+                    return await result.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    return await result.Content.ReadAsStringAsync();
+                }
+            }               
         }
 
 
@@ -43,22 +46,25 @@ namespace donet.io.rong.util {
 
             String signature = GetHash(appSecret + nonce + timestamp);
 
-            httpClient.Timeout = TimeSpan.FromSeconds(30);
-
-            if (contentType == null || contentType.Equals("") || contentType.Length < 10)
+            using (HttpClient httpClient = new HttpClient())
             {
-                contentType = "application/x-www-form-urlencoded";
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
+
+                if (contentType == null || contentType.Equals("") || contentType.Length < 10)
+                {
+                    contentType = "application/x-www-form-urlencoded";
+                }
+
+                StringContent httpContent = new StringContent(postStr, Encoding.UTF8, contentType);
+                httpContent.Headers.Add("App-Key", appkey);
+                httpContent.Headers.Add("Nonce", nonce);
+                httpContent.Headers.Add("Timestamp", timestamp);
+                httpContent.Headers.Add("Signature", signature);
+
+
+                var resultTask = await httpClient.PostAsync(methodUrl, httpContent);
+                return await resultTask.Content.ReadAsStringAsync();
             }
-
-            StringContent httpContent = new StringContent(postStr,Encoding.UTF8, contentType);
-            httpContent.Headers.Add("App-Key", appkey);
-            httpContent.Headers.Add("Nonce", nonce);
-            httpContent.Headers.Add("Timestamp", timestamp);
-            httpContent.Headers.Add("Signature", signature);
-                 
-
-            var resultTask = await httpClient.PostAsync(methodUrl, httpContent);
-            return await resultTask.Content.ReadAsStringAsync();
         }
 
         /// <summary>  
@@ -103,24 +109,6 @@ namespace donet.io.rong.util {
                 error.ToString());
 
             return false;
-        }
-
-        private bool disposedValue = false; 
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    httpClient.Dispose();
-                }
-                disposedValue = true;
-            }
-        }
-        public void Dispose()
-        {
-            Dispose(true);
         }
 
     }

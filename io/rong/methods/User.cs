@@ -14,9 +14,8 @@ using System.Text.Encodings.Web;
 
 namespace donet.io.rong.methods {
 
-    public class User:IDisposable {
-        private RongHttpClient rongClient = new RongHttpClient();
-    	
+    public class User{
+   	
         private String appKey;
         private String appSecret;
         
@@ -55,11 +54,12 @@ namespace donet.io.rong.methods {
 	    	postStr += "portraitUri=" + HttpUtility.UrlEncode(portraitUri == null ? "" : portraitUri) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
 
+            var rongClient = new RongHttpClient();
             string result = await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI + "/user/getToken.json", postStr, "application/x-www-form-urlencoded");
+            return (TokenReslut)RongJsonUtil.JsonStringToObj<TokenReslut>(result);
 
-              return (TokenReslut) RongJsonUtil.JsonStringToObj<TokenReslut>(result);
-		}
-            
+        }
+
         /**
 	 	 * 刷新用户信息方法 
 	 	 * 
@@ -69,7 +69,7 @@ namespace donet.io.rong.methods {
 		 *
 	 	 * @return CodeSuccessReslut
 	 	 **/
-		public async Task<CodeSuccessReslut> refreshAsync(String userId, String name, String portraitUri) {
+        public async Task<CodeSuccessReslut> refreshAsync(String userId, String name, String portraitUri) {
 
 			if(userId == null) {
 				throw new ArgumentNullException("Paramer 'userId' is required");
@@ -79,8 +79,8 @@ namespace donet.io.rong.methods {
 	    	postStr += "name=" + HttpUtility.UrlEncode(name == null ? "" : name) + "&";
 	    	postStr += "portraitUri=" + HttpUtility.UrlEncode(portraitUri == null ? "" : portraitUri) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/refresh.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/refresh.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -101,8 +101,8 @@ namespace donet.io.rong.methods {
             String postStr = "";
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (CheckOnlineReslut) RongJsonUtil.JsonStringToObj<CheckOnlineReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/checkOnline.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (CheckOnlineReslut) RongJsonUtil.JsonStringToObj<CheckOnlineReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/checkOnline.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -127,8 +127,8 @@ namespace donet.io.rong.methods {
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
             postStr += "minute=" + HttpUtility.UrlEncode(Convert.ToString(minute) == null ? "" : Convert.ToString(minute)) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -147,8 +147,8 @@ namespace donet.io.rong.methods {
 	    	String postStr = "";
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/unblock.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/unblock.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -160,8 +160,8 @@ namespace donet.io.rong.methods {
 		public async Task<QueryBlockUserReslut> queryBlockAsync() {
 
 	    	String postStr = "";
-	    	
-          	return (QueryBlockUserReslut) RongJsonUtil.JsonStringToObj<QueryBlockUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block/query.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (QueryBlockUserReslut) RongJsonUtil.JsonStringToObj<QueryBlockUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/block/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -186,8 +186,8 @@ namespace donet.io.rong.methods {
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr += "blackUserId=" + HttpUtility.UrlEncode(blackUserId == null ? "" : blackUserId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/add.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/add.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -206,8 +206,8 @@ namespace donet.io.rong.methods {
 	    	String postStr = "";
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (QueryBlacklistUserReslut) RongJsonUtil.JsonStringToObj<QueryBlacklistUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/query.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (QueryBlacklistUserReslut) RongJsonUtil.JsonStringToObj<QueryBlacklistUserReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/query.json", postStr, "application/x-www-form-urlencoded" ));
 		}
             
         /**
@@ -232,14 +232,9 @@ namespace donet.io.rong.methods {
 	    	postStr += "userId=" + HttpUtility.UrlEncode(userId == null ? "" : userId) + "&";
 	    	postStr += "blackUserId=" + HttpUtility.UrlEncode(blackUserId == null ? "" : blackUserId) + "&";
 	    	postStr = postStr.Substring(0, postStr.LastIndexOf('&'));
-	    	
-          	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/remove.json", postStr, "application/x-www-form-urlencoded" ));
+            var rongClient = new RongHttpClient();
+            return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/user/blacklist/remove.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-
-        public void Dispose()
-        {
-            rongClient.Dispose();
-        }
     }
        
 }

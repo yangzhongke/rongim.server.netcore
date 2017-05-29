@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Wordfilter : IDisposable
+    public class Wordfilter 
     {
         private RongHttpClient rongClient = new RongHttpClient();
 
@@ -78,11 +78,6 @@ namespace donet.io.rong.methods {
 	    	
           	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/wordfilter/delete.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-
-        public void Dispose()
-        {
-            rongClient.Dispose();
-        }
     }
        
 }

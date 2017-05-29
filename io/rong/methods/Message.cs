@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace donet.io.rong.methods {
 
-    public class Message:IDisposable {
+    public class Message {
         private RongHttpClient rongClient = new RongHttpClient();
 
         private String appKey;
@@ -374,11 +374,6 @@ namespace donet.io.rong.methods {
 	    	
           	return (CodeSuccessReslut) RongJsonUtil.JsonStringToObj<CodeSuccessReslut>(await rongClient.ExecutePostAsync(appKey, appSecret, RongCloud.RONGCLOUDURI+"/message/history/delete.json", postStr, "application/x-www-form-urlencoded" ));
 		}
-
-        public void Dispose()
-        {
-            rongClient.Dispose();
-        }
     }
        
 }
