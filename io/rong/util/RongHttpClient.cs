@@ -21,7 +21,9 @@ namespace donet.io.rong.util {
             if (string.IsNullOrEmpty(url)) {
                 throw new ArgumentNullException("url");
             }
-            using (HttpClient httpClient = new HttpClient())
+
+            using(HttpClientHandler handler =new HttpClientHandler {UseProxy=false })
+            using (HttpClient httpClient = new HttpClient(handler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(30);
                 var result = await httpClient.GetAsync(url);
@@ -46,7 +48,8 @@ namespace donet.io.rong.util {
 
             String signature = GetHash(appSecret + nonce + timestamp);
 
-            using (HttpClient httpClient = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler { UseProxy = false })
+            using (HttpClient httpClient = new HttpClient(handler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(30);
 
